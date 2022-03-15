@@ -2,8 +2,6 @@
 
 DB_DUMP_LOCATION="/sql-init/init.sql"
 
-echo "*** CREATING DATABASE ***"
+echo "*** Loading SQL file ***"
 
-psql -U open-grocery < "$DB_DUMP_LOCATION";
-
-echo "*** DATABASE CREATED! ***"
+psql -U open-grocery < "$DB_DUMP_LOCATION"
