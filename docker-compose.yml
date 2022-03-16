@@ -13,3 +13,16 @@ services:
     ports:
       - 5432:5432
     restart: unless-stopped
+
+  api-server:
+    container_name: "open-grocery-api-server"
+    build:
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    ports:
+      - 3000:3000
+    env_file: .env
+    command: nodemon app.js
+    restart: unless-stopped
