@@ -26,3 +26,13 @@ services:
     env_file: .env
     command: nodemon app.js
     restart: unless-stopped
+
+  open-grocery-web-server:
+      container_name: "open-grocery-web"
+      build:
+          context: ./web
+      volumes:
+          - ./web/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+          - 8010:80
+      restart: unless-stopped
