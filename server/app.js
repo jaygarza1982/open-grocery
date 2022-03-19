@@ -5,6 +5,8 @@ const { Client } = require('pg');
 const app = express();
 const port = 3000;
 
+app.use(express.json());
+
 // Logging
 app.use(morgan('common'));
 
@@ -24,9 +26,9 @@ client.connect();
 const itemsController = require('./controllers/items.controller');
 
 app.get('/api/items', itemsController.allItems(client));
-
-// TODO: Implement this
-// app.post('/api/items/insert', itemsController.insertItem(client));
+app.post('/api/items/insert', itemsController.insertItem(client));
+app.post('/api/items/update/:item_id', itemsController.updateItem(client));
+app.post('/api/items/delete/:item_id', itemsController.deleteItem(client));
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)
