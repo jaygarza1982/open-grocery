@@ -21,8 +21,6 @@ services:
     volumes:
       - /app/node_modules
       - ./server:/app
-    ports:
-      - 3000:3000
     env_file: .env
     command: nodemon app.js
     restart: unless-stopped

@@ -1,9 +1,12 @@
 const express = require('express');
 const morgan = require('morgan');
 const { Client } = require('pg');
+const { WebSocketServer } = require('ws');
+const WebSocket = require('ws');
 
 const app = express();
-const port = 3000;
+const port = 8000;
+const wsPort = 8001;
 
 app.use(express.json());
 
@@ -22,6 +25,25 @@ const client = new Client({
 });
 
 client.connect();
+
+const wss = new WebSocketServer({ port: wsPort });
+
+wss.on('error', console.error);
+
+wss.on('connection', ws => {
+    ws.on('error', console.error);
+    
+    ws.on('message', (data, isBinary) => {
+        
+        console.log(`WebSocket: ${data}`);
+
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(data, { binary: isBinary });
+            }
+        });
+    });
+});
 
 const itemsController = require('./controllers/items.controller');
 
