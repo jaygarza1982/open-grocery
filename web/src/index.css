@@ -11,3 +11,30 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.grocery-list {
+  display: grid;
+  gap: 15px;
+  margin: 15px;
+}
+
+.grocery-list-item {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.grocery-item-text {
+  font-size: 1.3rem;
+}
+
+.grocery-item-controls {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+/* Force no padding on MUI buttons */
+.MuiButtonBase-root {
+  padding: 0 !important;
+}

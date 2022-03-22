@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { listItemsAtom } from '../atmos';
 import GroceryItem from './GroceryItem';
+import { Paper } from '@mui/material'
 
 const GroceryList = () => {
 
@@ -22,16 +23,16 @@ const GroceryList = () => {
 
     return (
         <div className="grocery-list">
-            <ul>
-                {
-                    listItems?.map(listItem => (
+            {
+                listItems?.map(listItem => (
+                    <Paper elevation={5}>
                         <GroceryItem
                             key={`item-${listItem?.item_id}`}
                             item={listItem}
                         />
-                    ))
-                }
-            </ul>
+                    </Paper>
+                ))
+            }
         </div>        
     );
 }

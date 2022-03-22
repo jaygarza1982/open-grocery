@@ -1,6 +1,8 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { listItemsAtom } from '../atmos';
+import { IconButton } from '@mui/material';
+import { Check, Delete, Edit } from '@mui/icons-material';
 
 const GroceryItem = ({ item }) => {
 
@@ -20,13 +22,18 @@ const GroceryItem = ({ item }) => {
     }
     
     return (
-        <div className="list-item">
-            <li>
+        <div className="grocery-list-item">
+            <div className="grocery-item-text">
                 {item?.item}
-            </li>
-            <button onClick={checkItem}>Check</button>
-            <button onClick={editItem}>Edit</button>
-            <button onClick={deleteItem}>Delete</button>
+            </div>
+            <div className="grocery-item-controls">
+                <IconButton onClick={deleteItem}>
+                    <Delete />
+                </IconButton>
+                <IconButton onClick={checkItem}>
+                    <Check />
+                </IconButton>
+            </div>
         </div>
     );
 }
