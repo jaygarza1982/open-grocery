@@ -6,7 +6,7 @@ import {
 
 import { SnackbarProvider } from 'notistack';
 import { RecoilRoot } from 'recoil';
-import GroceryList from './components/GroceryList';
+import ListView from './components/ListView';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Router>
           <RecoilRoot>
             <Routes>
-              <Route path='/list' element={<GroceryList />} />
+              <Route path='/list' element={<ListView />} />
             </Routes>
           </RecoilRoot>
         </Router>
