@@ -34,6 +34,14 @@ code {
   gap: 30px;
 }
 
+.item-checked {
+  background-color: #B4F8C8 !important;
+}
+
+.item-unchecked {
+  /* background-color: #A0E7E5 !important; */
+}
+
 /* Force no padding on MUI buttons */
 .MuiButtonBase-root {
   padding: 0 !important;

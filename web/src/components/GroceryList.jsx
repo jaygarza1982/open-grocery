@@ -10,10 +10,10 @@ const GroceryList = () => {
 
     const loadGroceryItems = async () => {
         setListItems([
-            { item: 'Food item 1', item_id: 1 },
-            { item: 'Food item 2', item_id: 2 },
-            { item: 'Food item 3', item_id: 3 },
-            { item: 'Food item 4', item_id: 4 },
+            { item: 'Beer', checked: false, item_id: 1 },
+            { item: 'Milk', checked: false, item_id: 4 },
+            { item: 'apples', checked: false, item_id: 3 },
+            { item: 'Bread', checked: false, item_id: 2 },
         ])
     }
 
@@ -21,13 +21,25 @@ const GroceryList = () => {
         loadGroceryItems();
     }, []);
 
+    const stringCompare = (a, b) => {
+        if (a?.item?.toLowerCase() < b?.item?.toLowerCase()) return -1;
+        if (a?.item?.toLowerCase() > b?.item?.toLowerCase()) return 1;
+        return 0;
+    }
+
     return (
         <div className="grocery-list">
             {
-                listItems?.map(listItem => (
-                    <Paper elevation={5}>
+                // Do not mutate state directly
+                JSON.parse(JSON.stringify(listItems))
+                ?.sort(stringCompare)
+                ?.map(listItem => (
+                    <Paper
+                        key={`grocery-item-${listItem?.item_id}`}
+                        className={listItem?.checked ? 'item-checked' : 'item-unchecked'}
+                        elevation={5}
+                    >
                         <GroceryItem
-                            key={`item-${listItem?.item_id}`}
                             item={listItem}
                         />
                     </Paper>
