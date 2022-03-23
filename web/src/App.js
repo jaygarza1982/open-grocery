@@ -15,7 +15,7 @@ function App() {
         <Router>
           <RecoilRoot>
             <Routes>
-              <Route path='/list' element={<ListView />} />
+              <Route path='/list/:listCode' element={<ListView />} />
             </Routes>
           </RecoilRoot>
         </Router>
