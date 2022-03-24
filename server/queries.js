@@ -6,7 +6,7 @@ module.exports = {
         -- select statement here
     `,
     insertListItem: `
-        INSERT INTO list_items (item, list_code) VALUES ($1, $2);
+        INSERT INTO list_items (item, list_code) VALUES ($1, $2) RETURNING *;
     `,
     updateListItem: `
         UPDATE list_items SET item = $1 WHERE item_id = $2;

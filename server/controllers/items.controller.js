@@ -19,9 +19,9 @@ module.exports = {
             try {
                 const { item, list_code } = req.body;
     
-                await client.query(queries.insertListItem, [item, list_code]);
+                const queryResult = await client.query(queries.insertListItem, [item, list_code]);
     
-                res.send();
+                res.send(queryResult.rows[0]);
             } catch (error) {
                 console.error(error);
                 res.status(500).send(error);

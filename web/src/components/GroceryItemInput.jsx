@@ -1,5 +1,5 @@
 import { Add } from '@mui/icons-material';
-import { IconButton, TextField } from '@mui/material';
+import { IconButton, TextField, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { listItemsAtom } from '../atmos';
@@ -13,8 +13,12 @@ const GroceryItemInput = () => {
     const [listItems, setListItems] = useRecoilState(listItemsAtom);
 
     const [groceryInput, setGroceryInput] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const onTextChange = e => {
+        // Do not change text if loading
+        if (loading) return;
+
         setGroceryInput(e.target.value);
     }
 
@@ -24,22 +28,25 @@ const GroceryItemInput = () => {
 
     const addListItem = async () => {
         try {
-            if (groceryInput.trim() === '') return;
+            if (groceryInput.trim() === '' || loading) return;
+            setLoading(true);
 
-            await axios.post('/api/items/insert', {
+            const insertResult = (await axios.post('/api/items/insert', {
                 item: groceryInput,
                 list_code: listCode
-            });
-            
+            })).data;
+
             setListItems([
                 ...listItems,
-                { item: groceryInput, item_id: Math.round(Math.random()*999999), checked: false }
+                insertResult
             ]);
-    
+            
             setGroceryInput('');
         } catch (error) {
             console.log('Could not add item', error);
         }
+
+        setLoading(false);
     }
 
     return (
@@ -51,9 +58,13 @@ const GroceryItemInput = () => {
                 onChange={onTextChange}
                 onKeyDown={onKeyDown}
             />
-            <IconButton onClick={addListItem}>
-                <Add />
-            </IconButton>
+            {
+                loading ? <CircularProgress /> : (
+                    <IconButton onClick={addListItem}>
+                        <Add />
+                    </IconButton>
+                )
+            }
         </div>
     );
 }

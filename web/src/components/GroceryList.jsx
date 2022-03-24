@@ -9,6 +9,7 @@ const GroceryList = () => {
     const [listItems, setListItems] = useRecoilState(listItemsAtom);
 
     const loadGroceryItems = async () => {
+        // TODO: Map this into object instead of array. Keys will be item ids
         setListItems([
             { item: 'Beer', checked: false, item_id: 1 },
             { item: 'Milk', checked: false, item_id: 4 },
