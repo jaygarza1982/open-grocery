@@ -36,10 +36,10 @@ const GroceryItemInput = () => {
                 list_code: listCode
             })).data;
 
-            setListItems([
-                ...listItems,
-                insertResult
-            ]);
+            const newListItems = JSON.parse(JSON.stringify(listItems));
+            newListItems[insertResult.item_id] = insertResult;
+
+            setListItems(newListItems);
             
             setGroceryInput('');
         } catch (error) {

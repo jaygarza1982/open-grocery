@@ -9,16 +9,13 @@ const GroceryItem = ({ item }) => {
     const [listItems, setListItems] = useRecoilState(listItemsAtom);
     
     const checkItem = async () => {
-        // Return list with opposite check on item
-        const newItems = listItems.map(i => {
-            if (i.item_id === item.item_id) {
-                return {...i, checked: !item.checked }
-            }
+        // Mock a check of an item
+        const newListItems = JSON.parse(JSON.stringify(listItems));
 
-            return i;
-        });
+        delete newListItems[item.item_id];
+        newListItems[item.item_id] = { ...item, checked: !item.checked };
 
-        setListItems(newItems);
+        setListItems(newListItems);
     }
     
     const editItem = async () => {
@@ -26,7 +23,8 @@ const GroceryItem = ({ item }) => {
     }
     
     const deleteItem = async () => {
-        const newItems = listItems.filter(i => i.item_id !== item.item_id);
+        const newItems = JSON.parse(JSON.stringify(listItems));
+        delete newItems[item.item_id];
         setListItems(newItems);
     }
     
