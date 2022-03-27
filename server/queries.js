@@ -3,7 +3,7 @@
 
 module.exports = {
     getAllItems: `
-        -- select statement here
+        SELECT * FROM list_items WHERE list_code = $1;
     `,
     insertListItem: `
         INSERT INTO list_items (item, list_code) VALUES ($1, $2) RETURNING *;

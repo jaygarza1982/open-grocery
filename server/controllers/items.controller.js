@@ -5,7 +5,9 @@ module.exports = {
     allItems: (client) => {
         return async (req, res) => {
             try {
-                const query = await client.query(queries.getAllItems);
+                const { listCode } = req.params;
+
+                const query = await client.query(queries.getAllItems, [listCode]);
 
                 res.send(query.rows);
             } catch (error) {

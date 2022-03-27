@@ -3,27 +3,29 @@ import { useRecoilState } from 'recoil';
 import { listItemsAtom } from '../atmos';
 import GroceryItem from './GroceryItem';
 import { Paper } from '@mui/material'
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const GroceryList = () => {
+
+    const { listCode } = useParams();
 
     const [listItems, setListItems] = useRecoilState(listItemsAtom);
 
     const loadGroceryItems = async () => {
-        // Mock API data
-        const items = [
-            { item: 'Beer', checked: false, item_id: 1 },
-            { item: 'Milk', checked: false, item_id: 4 },
-            { item: 'apples', checked: false, item_id: 3 },
-            { item: 'Bread', checked: false, item_id: 2 },
-        ]
+        try {
+            const items = (await axios.get(`/api/items/${listCode}`)).data;
 
-        // Place items into map based off of array
-        const itemMap = {}
-        items.forEach(item => {
-            itemMap[item.item_id] = item;
-        });
+            // Place items into map based off of array
+            const itemMap = {}
+            items.forEach(item => {
+                itemMap[item.item_id] = item;
+            });
 
-        setListItems(itemMap);
+            setListItems(itemMap);
+        } catch (error) {
+            console.log('Could not fetch list items', error);
+        }
     }
 
     useEffect(() => {

@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import { listItemsAtom } from '../atmos';
 import { IconButton } from '@mui/material';
 import { Check, Delete, Edit } from '@mui/icons-material';
+import axios from 'axios';
 
 const GroceryItem = ({ item }) => {
 
@@ -23,9 +24,16 @@ const GroceryItem = ({ item }) => {
     }
     
     const deleteItem = async () => {
-        const newItems = JSON.parse(JSON.stringify(listItems));
-        delete newItems[item.item_id];
-        setListItems(newItems);
+        try {
+            await axios.post(`/api/items/delete/${item.item_id}`);
+
+            // Remove item from local list
+            const newItems = JSON.parse(JSON.stringify(listItems));
+            delete newItems[item.item_id];
+            setListItems(newItems);
+        } catch (error) {
+            console.log('Could not delete item', error);
+        }
     }
     
     return (
