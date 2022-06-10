@@ -21,7 +21,24 @@ const client = new Client({
     port: 5432,
 });
 
-client.connect();
+const sqlInit = `
+    CREATE TABLE public.list_items (
+        item_id SERIAL PRIMARY KEY NOT NULL,
+        item varchar(100) NOT NULL,
+        list_code varchar(100) NOT NULL
+    );
+`;
+
+setTimeout(async () => {
+    try {
+        await client.connect();
+
+        await client.query(sqlInit);
+    } catch (error) {
+        console.log('Could not connect to Postgres DB!', error);
+        return;
+    }
+}, 5000)
 
 const itemsController = require('./controllers/items.controller');
 

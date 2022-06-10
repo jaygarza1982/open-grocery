@@ -7,8 +7,6 @@ services:
     image: postgres:14.0-alpine
     volumes:
       - ./postgres/database:/var/lib/postgresql/data
-      - ./postgres/sql-init:/sql-init
-      - ./postgres/sh-init:/docker-entrypoint-initdb.d
     env_file: .env
     ports:
       - 5432:5432
